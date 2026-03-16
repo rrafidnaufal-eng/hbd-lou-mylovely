@@ -7,15 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka+One&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink-main: #ff4d6d;
+            --pink-dark: #ff4d6d;
             --pink-soft: #ff85a1;
             --pink-pastel: #ffccd5;
+            --bg-glass: rgba(255, 255, 255, 0.2);
         }
 
         body {
             margin: 0; padding: 0;
-            /* Background Artistik: Gradasi Mewah (Bukan Pink Polos) */
-            background: radial-gradient(circle at center, #ffffff 0%, #fff0f3 45%, #ffccd5 100%);
+            /* Background Gradasi Radial yang Artistik */
+            background: radial-gradient(circle at center, #ffffff 0%, #fff0f3 50%, #ffccd5 100%);
             font-family: 'Quicksand', sans-serif;
             display: flex; justify-content: center; align-items: center;
             height: 100vh; overflow: hidden;
@@ -26,58 +27,62 @@
             gap: 40px; width: 95%; max-width: 1100px; z-index: 10;
         }
 
-        /* --- LEFT SIDE: PROFILE --- */
+        /* --- SISI KIRI: PROFIL & FOTO --- */
         .profile-side { text-align: center; flex: 1; }
         .profile-side h1 { 
-            font-family: 'Fredoka One', cursive; color: var(--pink-main); 
-            font-size: 2.8rem; margin: 0; filter: drop-shadow(2px 2px 0px white);
+            font-family: 'Fredoka One', cursive; color: var(--pink-dark); 
+            font-size: 3rem; margin: 0; text-shadow: 2px 2px white;
         }
         
         .date-badge {
-            background: var(--pink-main); color: white; padding: 6px 20px;
+            background: var(--pink-dark); color: white; padding: 6px 20px;
             border-radius: 20px; display: inline-block; font-weight: bold; margin-top: 5px;
         }
 
         .photo-area {
-            position: relative; width: 210px; height: 210px; margin: 35px auto 20px;
+            position: relative; width: 220px; height: 220px; margin: 30px auto 15px;
         }
 
+        /* Topi Ultah yang Artistik - Dikunci agar tidak nabrak tanggal */
         .party-hat {
-            position: absolute; top: -35px; left: 62%;
+            position: absolute; top: -38px; left: 60%;
             transform: translateX(-50%) rotate(15deg);
-            width: 70px; z-index: 20; pointer-events: none;
+            width: 75px; z-index: 15; pointer-events: none;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
         }
 
         .photo-circle {
             width: 100%; height: 100%; border-radius: 50%;
-            border: 8px solid white; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.25);
-            overflow: hidden; position: relative; z-index: 5;
+            border: 8px solid white; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            overflow: hidden; position: relative; z-index: 10;
         }
         .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        .btn-magic {
-            background: linear-gradient(45deg, var(--pink-main), var(--pink-soft));
-            color: white; border: none; padding: 12px 35px; border-radius: 50px;
+        .btn-toggle {
+            background: linear-gradient(45deg, var(--pink-dark), var(--pink-soft));
+            color: white; border: none; padding: 12px 30px; border-radius: 50px;
             cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: 0.3s;
             box-shadow: 0 10px 20px rgba(248,77,109,0.3);
         }
+        .btn-toggle:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(248,77,109,0.4); }
 
-        /* --- RIGHT SIDE: ENVELOPE --- */
-        .envelope-side { flex: 1; display: flex; justify-content: center; align-items: flex-end; height: 520px; }
-        .env-wrapper { position: relative; width: 320px; height: 200px; }
+        /* --- SISI KANAN: AMPLOP & KERTAS --- */
+        .envelope-side { flex: 1; display: flex; justify-content: center; align-items: flex-end; height: 500px; }
+        .env-wrapper { position: relative; width: 320px; height: 210px; }
 
-        .env-back {
+        .env-base {
             position: absolute; bottom: 0; width: 100%; height: 100%;
-            background-color: var(--pink-soft); z-index: 2;
+            background-color: var(--pink-soft); z-index: 5;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
         }
 
-        .env-back::after {
+        /* Badan Depan Amplop */
+        .env-base::after {
             content: ""; position: absolute; z-index: 10;
-            border-top: 100px solid transparent;
+            border-top: 105px solid transparent;
             border-left: 160px solid #ffb1bd;
             border-right: 160px solid #ffb1bd;
-            border-bottom: 100px solid #ffb1bd;
+            border-bottom: 105px solid #ffb1bd;
             bottom: 0; left: 0;
         }
 
@@ -85,48 +90,48 @@
             position: absolute; top: 0; width: 0; height: 0;
             border-left: 160px solid transparent;
             border-right: 160px solid transparent;
-            border-top: 100px solid var(--pink-main);
+            border-top: 110px solid var(--pink-dark);
             transform-origin: top; transition: transform 0.6s ease; z-index: 11;
         }
 
-        /* Surat Panjang Bibuuuy */
-        .letter {
-            position: absolute; bottom: 5px; left: 10px;
-            width: 300px; height: 185px; background: white;
-            padding: 30px 22px; box-sizing: border-box;
+        /* Surat Panjang Bibuuuy - Lebih Pas */
+        .paper {
+            position: absolute; bottom: 10px; left: 10px;
+            width: 300px; height: 190px; background: white;
+            padding: 35px 22px 25px; box-sizing: border-box;
             transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1; border-radius: 4px;
+            z-index: 4; border-radius: 4px;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.02);
-            overflow-y: auto; /* Agar teks panjang bisa di-scroll */
+            overflow-y: auto;
         }
-        .letter h2 { font-family: 'Dancing Script', cursive; color: var(--pink-main); margin-top: 0; font-size: 1.4rem; }
-        .letter p { font-size: 0.88rem; line-height: 1.6; color: #444; margin-bottom: 15px; }
+        .paper h2 { font-family: 'Dancing Script', cursive; color: var(--pink-dark); margin: 0; border-bottom: 1px solid var(--pink-pastel); padding-bottom: 10px; width: 100%; text-align: left;}
+        .paper p { font-size: 0.88rem; line-height: 1.6; color: #444; margin-bottom: 15px; text-align: left; }
 
-        /* Logic Buka */
-        .env-wrapper.open .env-flap { transform: rotateX(180deg); z-index: 0; }
-        .env-wrapper.open .letter { 
-            transform: translateY(-240px); 
-            height: 420px; z-index: 12; 
+        /* Logic Buka - Sudah diturunkan biar gak terpotong */
+        .env-wrapper.open .env-flap { transform: rotateX(180deg); z-index: 1; }
+        .env-wrapper.open .paper { 
+            transform: translateY(-210px); /* Keluar sedikit lebih pas */
+            height: 380px; z-index: 12; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
 
-        #confetti-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+        #party-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
 
         @media (max-width: 768px) {
-            .container { flex-direction: column; gap: 20px; padding-top: 40px; }
-            .envelope-side { height: 420px; }
-            .env-wrapper.open .letter { transform: translateY(-200px); height: 380px; }
+            .container { flex-direction: column; gap: 20px; height: auto; padding-top: 40px; }
+            .envelope-side { height: 400px; }
+            .env-wrapper.open .paper { transform: translateY(-160px); height: 320px; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="confetti-layer"></canvas>
+    <canvas id="party-canvas"></canvas>
 
     <div class="container">
         <div class="profile-side">
             <h1>Happy Birthday</h1>
-            <div class="date-badge">✨ 17 March ✨</div>
+            <div class="date-badge">🎂 17 March 🎂</div>
             
             <div class="photo-area">
                 <svg class="party-hat" viewBox="0 0 100 100">
@@ -138,15 +143,15 @@
                 </div>
             </div>
             
-            <p style="color:var(--pink-main); font-weight:700;">Dear Lou my lovely 💖</p>
-            <button class="btn-magic" id="btnMain" onclick="toggleLetter()">tap this bibuuuy 💌</button>
+            <p style="color:var(--pink-dark); font-weight:700;">Dear Lou my lovely 💖</p>
+            <button class="btn-toggle" id="btnMain" onclick="toggleSurat()">tap this bibuuuy 💌</button>
         </div>
 
         <div class="envelope-side">
             <div class="env-wrapper" id="envBox">
                 <div class="env-flap"></div>
-                <div class="letter">
-                    <h2>HBD Lou My Lovely 💖</h2>
+                <div class="paper">
+                    <h2>Dear Lou Sayang...</h2>
                     <p>
                         happy birthdayyy my bubub sayang 💖 finally you’re turning 21! now officially an adult yhh sesuai yg selalu kamu keluhkan “aku masi under age” but now ure 21!! 🤪🤪🤪
                     </p>
@@ -165,23 +170,23 @@
                     <p>
                         btw maaf ya kata katanya berantakan bgtttt😭😭😭, jujur perasaanku campur aduk, sedih gabisa rayain bareng, disisi lain juga aku bahagiaa kalo kamu bahagiaa
                     </p>
-                    <p style="font-weight: bold; text-align: right; color: var(--pink-main);">
+                    <p style="font-weight: bold; text-align: right; color: var(--pink-dark);">
                         love you so freaking much, my heart is all yours 🥰💞<br>
                         - Nau -
                     </p>
                 </div>
-                <div class="env-back"></div>
+                <div class="env-base"></div>
             </div>
         </div>
     </div>
 
     <script>
-        let confettiStarted = false;
-        const canvas = document.getElementById('confetti-layer');
+        let isPestaOn = false;
+        const canvas = document.getElementById('party-canvas');
         const ctx = canvas.getContext('2d');
-        let parts = [];
+        let pieces = [];
 
-        function toggleLetter() {
+        function toggleSurat() {
             const env = document.getElementById('envBox');
             const btn = document.getElementById('btnMain');
             
@@ -189,38 +194,41 @@
             
             if(env.classList.contains('open')) {
                 btn.innerHTML = "close ❌";
-                if(!confettiStarted) {
-                    confettiStarted = true;
-                    initConfetti();
-                    draw();
+                if(!isPestaOn) {
+                    isPestaOn = true;
+                    initPesta();
+                    animatePesta();
                 }
             } else {
                 btn.innerHTML = "tap this bibuuuy 💌";
+                // opsional: stop confetti bila ditutup
             }
         }
 
-        function initConfetti() {
+        function initPesta() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             for (let i = 0; i < 150; i++) {
-                parts.push({
+                pieces.push({
                     x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 5 + 3,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 4,
                     d: Math.random() * 150,
                     color: `hsl(${Math.random() * 360}, 80%, 70%)`,
                     tilt: Math.random() * 10 - 10,
-                    speed: Math.random() * 2 + 2
+                    speedY: Math.random() * 2 + 2,
+                    speedX: Math.sin(Math.random() * 150)
                 });
             }
         }
 
-        function draw() {
+        function animatePesta() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            parts.forEach((p) => {
-                p.y += p.speed;
-                p.x += Math.sin(p.d) * 1;
-                if (p.y > canvas.height) p.y = -20;
+            pieces.forEach((p, i) => {
+                p.y += p.speedY;
+                p.x += p.speedX;
+                if (p.y > canvas.height) p.y = -20; // reset ke atas
+                
                 ctx.beginPath();
                 ctx.lineWidth = p.r;
                 ctx.strokeStyle = p.color;
@@ -228,8 +236,13 @@
                 ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
                 ctx.stroke();
             });
-            requestAnimationFrame(draw);
+            requestAnimationFrame(animatePesta);
         }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
