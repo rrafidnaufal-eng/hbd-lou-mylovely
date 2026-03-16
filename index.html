@@ -3,154 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBD Lou 21</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <title>HBD Lou My Lovely</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka+One&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
+        :root {
+            --pink-tua: #ff4d6d;
+            --pink-medium: #ff758f;
+            --pink-muda: #ffb3c1;
+            --bg-soft: #fff0f3;
+        }
+
         body {
             margin: 0; padding: 0;
-            background: #fff0f3;
+            background-color: var(--bg-soft);
+            background-image: radial-gradient(#ffccd5 1px, transparent 1px);
+            background-size: 20px 20px; /* Pola titik-titik lembut di background */
             font-family: 'Quicksand', sans-serif;
             display: flex; justify-content: center; align-items: center;
             height: 100vh; overflow: hidden;
         }
 
-        /* Confetti */
-        #confetti-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
-        .confetti { position: absolute; width: 8px; height: 8px; top: -10px; animation: fall linear infinite; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* Tombol Awal */
-        #btn-start {
-            padding: 15px 30px; background: #f84878; color: white;
-            border: none; border-radius: 50px; font-weight: bold;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(248,72,120,0.4);
-            z-index: 200; position: relative;
+        /* Dekorasi Pita Atas (SVG) */
+        .pita-dekor {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 5;
+            pointer-events: none;
         }
 
-        /* Container Kartu */
+        /* Dekorasi Balon */
+        .balon {
+            position: fixed; bottom: -100px; width: 50px; height: 70px;
+            background: var(--pink-medium); border-radius: 50%;
+            z-index: 1; opacity: 0.6; animation: terbang 10s infinite ease-in;
+        }
+        @keyframes terbang {
+            from { transform: translateY(0) rotate(0); }
+            to { transform: translateY(-120vh) rotate(20deg); }
+        }
+
+        /* Layout Utama Seperti Referensi */
+        .main-layout {
+            display: flex; align-items: center; justify-content: center;
+            gap: 50px; width: 90%; max-width: 1000px; z-index: 10;
+        }
+
+        /* Bagian Kiri: Teks & Foto Besar */
+        .side-info { text-align: center; flex: 1; }
+        .side-info h1 { 
+            font-family: 'Fredoka One', cursive; color: var(--pink-tua);
+            font-size: 3.5rem; margin: 0; text-shadow: 3px 3px white;
+        }
+        .date-box {
+            background: var(--pink-tua); color: white; padding: 5px 20px;
+            border-radius: 20px; display: inline-block; font-weight: bold; margin: 10px 0;
+        }
+        .big-photo-circle {
+            width: 250px; height: 250px; border-radius: 50%;
+            border: 10px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            overflow: hidden; margin: 20px auto;
+        }
+        .big-photo-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Bagian Kanan: Kartu 3D */
         .card-container {
-            display: none; /* Muncul setelah klik tombol */
-            width: 300px; height: 400px;
-            perspective: 1000px;
-            position: relative;
+            perspective: 1500px; width: 300px; height: 400px;
         }
 
-        /* Sumbu Putar */
         .card-inner {
-            width: 100%; height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%; height: 100%; position: relative;
+            transform-style: preserve-3d; transition: transform 0.8s;
             cursor: pointer;
         }
+        .card-inner.open { transform: rotateY(-180deg) translateX(50%); }
 
-        /* Class untuk membalik kartu */
-        .card-inner.is-flipped {
-            transform: rotateY(180deg);
-        }
-
-        /* Sisi Kartu (Umum) */
         .card-face {
-            position: absolute;
-            width: 100%; height: 100%;
-            backface-visibility: hidden; /* Sembunyikan sisi belakang saat dibalik */
-            -webkit-backface-visibility: hidden;
-            border-radius: 15px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 20px; text-align: center;
-            border: 5px solid white;
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 15px;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 25px; border: 4px solid white;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* HALAMAN DEPAN */
-        .face-front {
-            background: white;
-            z-index: 2;
+        /* Cover Kartu */
+        .face-front { background: var(--pink-medium); z-index: 2; color: white; }
+        .small-photo {
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px solid white; overflow: hidden; margin-bottom: 15px;
         }
+        .small-photo img { width: 100%; height: 100%; object-fit: cover; }
 
-        .photo-frame {
-            width: 160px; height: 160px; border-radius: 50%;
-            border: 4px solid #ff85a1; overflow: hidden; margin-bottom: 15px;
-        }
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        .face-front h2 { font-family: 'Dancing Script', cursive; color: #f84878; margin: 0; font-size: 1.8rem; }
-        .hint { font-size: 0.7rem; color: #aaa; margin-top: 10px; }
-
-        /* HALAMAN BELAKANG (SURAT) */
+        /* Isi Kartu */
         .face-back {
-            background: #fffafa;
-            transform: rotateY(180deg); /* Posisi awal terbalik */
-            z-index: 1;
-            justify-content: flex-start;
-            text-align: left;
-            padding-top: 30px;
-            overflow-y: auto; /* Jika tulisan kepanjangan bisa scroll */
+            background: white; transform: rotateY(180deg);
+            z-index: 1; text-align: left; justify-content: flex-start;
         }
-
-        .face-back h3 { font-family: 'Dancing Script', cursive; color: #f84878; border-bottom: 2px solid #ffebef; width: 100%; padding-bottom: 5px; margin-top: 0; }
+        .face-back h3 { 
+            font-family: 'Dancing Script', cursive; color: var(--pink-tua);
+            border-bottom: 2px solid var(--bg-soft); padding-bottom: 5px; width: 100%;
+        }
         .face-back p { font-size: 0.9rem; line-height: 1.6; color: #444; }
 
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column; gap: 20px; overflow-y: auto; height: 90vh; }
+            .big-photo-circle { width: 150px; height: 150px; }
+            .side-info h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="confetti-wrapper"></div>
+    <svg class="pita-dekor" viewBox="0 0 1440 100">
+        <path fill="#ff4d6d" d="M0,32L60,42.7C120,53,240,75,360,74.7C480,75,600,53,720,48C840,43,960,53,1080,58.7C1200,64,1320,64,1380,64L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+    </svg>
 
-    <button id="btn-start" onclick="openSurat()">Buka Surat Untuk Lou 💌</button>
-
-    <div class="card-container" id="container">
-        <div class="card-inner" id="card" onclick="flip()">
-            <div class="card-face face-front">
-                <div class="photo-frame">
-                    <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
-                </div>
-                <h2>Happy Birthday Love</h2>
-                <p style="font-weight: bold; color: #888; margin: 5px 0;">17 March</p>
-                <div class="hint">Tap kartu untuk baca surat ✨</div>
+    <div class="main-layout">
+        <div class="side-info">
+            <h1>Happy Birthday</h1>
+            <div class="date-box">✨ 17 March ✨</div>
+            <div class="big-photo-circle">
+                <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
             </div>
+            <p style="font-weight: bold; color: var(--pink-tua);">Dear Lou my lovely</p>
+            <button onclick="toggleCard()" style="background:var(--pink-tua); color:white; border:none; padding:10px 20px; border-radius:20px; cursor:pointer;">Klik Buka Surat 💌</button>
+        </div>
 
-            <div class="card-face face-back">
-                <h3>Untuk Sayangku Lou,</h3>
-                <p>
-                    Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya semoga panjang umur, sehat selalu, makin cantik, dan apa yang kamu cita-citakan bisa tercapai di tahun ini. 
-                    <br><br>
-                    Semoga di usia baru ini kamu makin bahagia dan selalu dalam lindungan-Nya. Tetap jadi Lou yang luar biasa ya! 
-                    <br><br>
-                    <b>I love you so much! ❤️</b>
-                </p>
-                <center><small style="color: #ccc;">(Tap lagi untuk tutup)</small></center>
+        <div class="card-container">
+            <div class="card-inner" id="card" onclick="toggleCard()">
+                <div class="card-face face-front">
+                    <div class="small-photo">
+                        <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
+                    </div>
+                    <p>To: Lou ❤️</p>
+                    <h2 style="font-family: 'Dancing Script', cursive;">Happy Birthday</h2>
+                </div>
+                <div class="card-face face-back">
+                    <h3>Happy Birthday Sayang!</h3>
+                    <p>
+                        Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya semoga panjang umur, sehat selalu, makin cantik, dan apa yang kamu cita-citakan bisa tercapai di tahun ini. 
+                        <br><br>
+                        Tetap jadi Lou yang luar biasa ya! I love you so much! ❤️
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function openSurat() {
-            document.getElementById('btn-start').style.display = 'none';
-            document.getElementById('container').style.display = 'block';
-            startConfetti();
+        function toggleCard() {
+            document.getElementById('card').classList.toggle('open');
         }
 
-        function flip() {
-            document.getElementById('card').classList.toggle('is-flipped');
+        // Generate Balon Otomatis
+        function createBalloon() {
+            const b = document.createElement('div');
+            b.className = 'balon';
+            b.style.left = Math.random() * 100 + 'vw';
+            b.style.backgroundColor = ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffccd5'][Math.floor(Math.random() * 4)];
+            b.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(b);
+            setTimeout(() => b.remove(), 10000);
         }
-
-        function startConfetti() {
-            const wrapper = document.getElementById('confetti-wrapper');
-            const colors = ['#f84878', '#ff85a1', '#ffffff', '#ffd1dc'];
-            for (let i = 0; i < 60; i++) {
-                const conf = document.createElement('div');
-                conf.className = 'confetti';
-                conf.style.left = Math.random() * 100 + 'vw';
-                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                conf.style.delay = Math.random() * 2 + 's';
-                wrapper.appendChild(conf);
-            }
-        }
+        setInterval(createBalloon, 1500);
     </script>
 </body>
 </html>
