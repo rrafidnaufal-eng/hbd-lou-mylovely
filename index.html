@@ -11,6 +11,7 @@
             --pink-medium: #ff758f;
             --pink-light: #ffb3c1;
             --envelope-color: #ff85a1;
+            --paper-color: #ffffff;
         }
 
         body {
@@ -23,76 +24,65 @@
             height: 100vh; overflow: hidden;
         }
 
-        /* Container Utama Layout */
         .main-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 60px;
-            width: 90%;
-            max-width: 1000px;
-            z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            gap: 40px; width: 95%; max-width: 1100px; z-index: 10;
         }
 
-        /* --- SISI KIRI: INFO & FOTO --- */
+        /* --- SISI KIRI: FOTO & TOPI --- */
         .left-side { text-align: center; flex: 1; }
+        .left-side h1 { font-family: 'Fredoka One', cursive; color: var(--pink-dark); font-size: 2.8rem; margin: 0; }
         
-        .left-side h1 { 
-            font-family: 'Fredoka One', cursive; 
-            color: var(--pink-dark);
-            font-size: 3rem; margin: 0;
-        }
-
         .date-tag {
-            background: var(--pink-dark);
-            color: white; padding: 5px 20px;
-            border-radius: 20px; display: inline-block;
-            font-weight: bold; margin: 10px 0;
+            background: var(--pink-dark); color: white; padding: 5px 18px;
+            border-radius: 20px; display: inline-block; font-weight: bold; margin: 8px 0;
+            position: relative; z-index: 10; /* Biar di atas topi */
         }
 
-        .photo-container {
-            position: relative;
-            width: 220px; height: 220px;
-            margin: 20px auto;
+        .photo-wrapper {
+            position: relative; width: 200px; height: 200px; margin: 30px auto 15px;
         }
 
-        /* Topi Ultah di Atas Foto */
-        .birthday-hat {
-            position: absolute;
-            top: -45px; left: 50%;
-            transform: translateX(-50%) rotate(-15deg);
-            width: 80px; z-index: 5;
+        /* Topi Ultah - Diperbaiki posisinya agar tidak nabrak tanggal */
+        .hat {
+            position: absolute; top: -35px; left: 60%;
+            transform: translateX(-50%) rotate(15deg);
+            width: 70px; z-index: 5; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.2));
         }
 
         .photo-circle {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 8px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
+            width: 100%; height: 100%; border-radius: 50%;
+            border: 6px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden; position: relative; z-index: 6;
         }
         .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-        .name-tag { color: var(--pink-dark); font-weight: bold; margin-top: 10px; }
+        .btn-open {
+            background: var(--pink-dark); color: white; border: none;
+            padding: 12px 25px; border-radius: 25px; cursor: pointer;
+            font-weight: bold; margin-top: 15px; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(248,77,109,0.3);
+        }
 
-        /* --- SISI KANAN: AMPLOP --- */
-        .right-side { flex: 1; display: flex; justify-content: center; position: relative; }
+        /* --- SISI KANAN: AMPLOP & KERTAS --- */
+        .right-side { flex: 1; display: flex; justify-content: center; align-items: flex-end; height: 450px; }
 
-        .envelope-wrapper {
-            position: relative;
-            width: 300px; height: 200px;
-            background-color: var(--envelope-color);
-            cursor: pointer;
+        .envelope-container { position: relative; width: 300px; height: 200px; }
+
+        .envelope {
+            position: absolute; bottom: 0; width: 300px; height: 200px;
+            background-color: var(--envelope-color); z-index: 3;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .envelope-wrapper::before {
-            content: ""; position: absolute; z-index: 2;
+        /* Badan Depan Amplop */
+        .envelope::after {
+            content: ""; position: absolute; z-index: 10;
             border-top: 100px solid transparent;
             border-left: 150px solid #ffb1bd;
             border-right: 150px solid #ffb1bd;
             border-bottom: 100px solid #ffb1bd;
-            top: 0;
+            bottom: 0; left: 0;
         }
 
         .flap {
@@ -100,42 +90,35 @@
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
             border-top: 100px solid var(--pink-dark);
-            transform-origin: top;
-            transition: transform 0.4s 0.4s ease;
-            z-index: 3;
+            transform-origin: top; transition: transform 0.4s 0.3s; z-index: 11;
         }
 
-        .letter {
-            position: absolute; bottom: 0; left: 10px;
-            width: 280px; height: 180px;
-            background: white; padding: 20px;
-            box-sizing: border-box; transition: 0.6s ease;
-            z-index: 1; border-radius: 5px;
+        /* Kertas Surat - Visual Kertas Asli */
+        .paper {
+            position: absolute; bottom: 10px; left: 10px;
+            width: 280px; height: 170px;
+            background: var(--paper-color);
+            background-image: linear-gradient(#f1f1f1 1px, transparent 1px);
+            background-size: 100% 25px; /* Efek garis buku */
+            padding: 25px 20px; box-sizing: border-box;
+            transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2; border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
             overflow-y: auto;
         }
 
-        .letter h2 { font-family: 'Dancing Script', cursive; color: var(--pink-dark); margin: 0; font-size: 1.3rem; }
-        .letter p { font-size: 0.85rem; line-height: 1.6; color: #444; }
+        .paper h2 { font-family: 'Dancing Script', cursive; color: var(--pink-dark); margin: 0 0 15px 0; font-size: 1.4rem; }
+        .paper p { font-size: 0.9rem; line-height: 25px; color: #444; margin: 0; }
 
-        /* Animasi Open */
-        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
-        .envelope-wrapper.open .letter { transform: translateY(-160px); height: 350px; z-index: 4; }
+        /* Status Terbuka */
+        .envelope-container.is-open .flap { transform: rotateX(180deg); z-index: 1; }
+        .envelope-container.is-open .paper { 
+            transform: translateY(-180px); /* Keluar dengan jarak yang pas */
+            height: 320px; z-index: 12; /* Di depan amplop saat keluar */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
 
-        /* Confetti */
         #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
-
-        /* Tombol Bawah Foto */
-        .btn-open {
-            background: var(--pink-dark); color: white; border: none;
-            padding: 10px 25px; border-radius: 20px; cursor: pointer;
-            font-weight: bold; margin-top: 15px; box-shadow: 0 4px 10px rgba(248,77,109,0.3);
-        }
-
-        /* Mobile Adjust */
-        @media (max-width: 768px) {
-            .main-container { flex-direction: column; gap: 30px; height: auto; padding-top: 50px; }
-            .envelope-wrapper.open .letter { transform: translateY(-120px); height: 300px; }
-        }
     </style>
 </head>
 <body>
@@ -146,79 +129,85 @@
         <div class="left-side">
             <h1>Happy Birthday</h1>
             <div class="date-tag">✨ 17 March ✨</div>
-            <div class="photo-container">
-                <svg class="birthday-hat" viewBox="0 0 100 100">
-                    <path d="M50 10 L10 90 L90 90 Z" fill="#ff4d6d" />
-                    <circle cx="50" cy="10" r="5" fill="white" />
-                    <path d="M20 70 Q50 80 80 70" fill="none" stroke="white" stroke-width="2" />
+            
+            <div class="photo-wrapper">
+                <svg class="hat" viewBox="0 0 100 100">
+                    <path d="M50 15 L15 85 L85 85 Z" fill="#ff4d6d" stroke="white" stroke-width="2"/>
+                    <circle cx="50" cy="15" r="6" fill="#fff" />
+                    <circle cx="35" cy="50" r="3" fill="#ffccd5" opacity="0.6"/>
+                    <circle cx="65" cy="70" r="4" fill="#ffccd5" opacity="0.6"/>
                 </svg>
                 <div class="photo-circle">
                     <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
                 </div>
             </div>
-            <div class="name-tag">Dear Lou my lovely</div>
-            <button class="btn-open" onclick="openEnvelope()">Klik Buka Surat 💌</button>
+            
+            <p style="color:var(--pink-dark); font-weight:bold; margin:0;">Dear Lou my lovely</p>
+            <button class="btn-open" onclick="toggleSurat()">Klik Buka Surat 💌</button>
         </div>
 
         <div class="right-side">
-            <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+            <div class="envelope-container" id="containerSurat">
                 <div class="flap"></div>
-                <div class="letter">
-                    <h2>Dear Lou...</h2>
+                <div class="paper">
+                    <h2>Dear Lou Sayang...</h2>
                     <p>
-                        Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya semoga panjang umur, sehat selalu, makin cantik, dan apa yang kamu cita-citakan bisa tercapai di tahun ini. 
+                        Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya. 
+                        Semoga panjang umur, sehat selalu, makin cantik, dan apa yang kamu cita-citakan bisa tercapai di tahun ini. 
                         <br><br>
                         Tetap jadi Lou yang luar biasa ya! I love you so much! ❤️
+                        <br><br>
+                        <i>With Love, [Nama Kamu]</i>
                     </p>
                 </div>
+                <div class="envelope"></div>
             </div>
         </div>
     </div>
 
     <script>
-        function openEnvelope() {
-            const env = document.getElementById('envelope');
-            env.classList.toggle('open');
-            
-            if(env.classList.contains('open')) {
-                startConfetti();
+        function toggleSurat() {
+            const container = document.getElementById('containerSurat');
+            container.classList.toggle('is-open');
+            if(container.classList.contains('is-open')) {
+                mencuarkanConfetti();
             }
         }
 
         // Script Confetti Meriah
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
-        let pieces = [];
+        let partikel = [];
 
-        function startConfetti() {
+        function mencuarkanConfetti() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             for (let i = 0; i < 150; i++) {
-                pieces.push({
+                partikel.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
-                    size: Math.random() * 8 + 5,
-                    color: ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffffff'][Math.floor(Math.random() * 4)],
-                    speed: Math.random() * 3 + 2,
-                    rotation: Math.random() * 360
+                    r: Math.random() * 6 + 4,
+                    d: Math.random() * 150,
+                    color: `hsl(${Math.random() * 360}, 70%, 70%)`,
+                    tilt: Math.random() * 10 - 10
                 });
             }
-            updateConfetti();
+            animasi();
         }
 
-        function updateConfetti() {
+        function animasi() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            pieces.forEach(p => {
-                p.y += p.speed;
-                p.rotation += p.speed;
-                ctx.fillStyle = p.color;
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation * Math.PI / 180);
-                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-                ctx.restore();
+            partikel.forEach((p, i) => {
+                p.y += Math.cos(p.d) + 3;
+                p.x += Math.sin(p.d);
+                ctx.beginPath();
+                ctx.lineWidth = p.r;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                ctx.stroke();
             });
-            if(pieces.length > 0) requestAnimationFrame(updateConfetti);
+            requestAnimationFrame(animasi);
         }
     </script>
 </body>
