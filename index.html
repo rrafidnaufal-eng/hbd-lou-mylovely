@@ -3,234 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Lou</title>
+    <title>Happy Birthday Lou!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;700&display=swap');
-
         :root {
-            --primary-pink: #ff85a1;
-            --soft-pink: #fbb1bd;
-            --dark-pink: #f25c7e;
-            --bg-color: #fff0f3;
+            --pink-main: #ff8fa3;
+            --pink-dark: #ff4d6d;
+            --pink-soft: #fff0f3;
+            --white: #ffffff;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            font-family: 'Poppins', sans-serif;
+            background-color: var(--pink-soft);
+            font-family: 'Quicksand', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
-            text-align: center;
         }
 
-        /* Background Confetti Canvas */
-        #confetti-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Confetti Container */
+        #confetti-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 100;
+        }
+
+        .confetti {
+            position: absolute; width: 10px; height: 10px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* Header Text */
+        .header { text-align: center; margin-bottom: 20px; z-index: 10; }
+        .header h1 { 
+            color: var(--pink-dark); 
+            font-size: 2.2rem; 
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+        }
+        .header p { color: #888; font-weight: bold; margin-top: 5px; }
+
+        /* Card Container 3D */
+        .card-wrapper {
+            perspective: 1500px;
+            width: 320px;
+            height: 420px;
+            z-index: 20;
+        }
+
+        .card {
+            position: relative;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
         }
 
-        .main-container {
-            z-index: 10;
-            position: relative;
+        .card.is-flipped {
+            transform: rotateY(-180deg);
         }
 
-        .title-bold {
-            font-size: 3rem;
-            color: var(--dark-pink);
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .date-tag {
-            background: var(--primary-pink);
-            color: white;
-            padding: 5px 20px;
+        /* Pages */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
             border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            border: 4px solid var(--white);
+        }
+
+        /* Front Page */
+        .face-front {
+            background-color: var(--white);
         }
 
         .photo-frame {
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            border: 8px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 6px solid var(--pink-main);
             overflow: hidden;
-            margin: 0 auto 10px;
-            background: #eee;
+            margin-bottom: 20px;
         }
 
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        .sub-name {
+        .face-front h2 {
+            color: var(--pink-dark);
             font-family: 'Dancing Script', cursive;
             font-size: 1.8rem;
-            color: var(--dark-pink);
-            margin-bottom: 30px;
+            margin: 0;
         }
 
-        /* Button Style */
+        .hint { color: #bbb; font-size: 0.8rem; margin-top: 15px; }
+
+        /* Back Page (Surat) */
+        .face-back {
+            background-color: var(--white);
+            transform: rotateY(180deg);
+            align-items: flex-start;
+            justify-content: flex-start;
+            overflow-y: auto;
+        }
+
+        .face-back h3 {
+            color: var(--pink-dark);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            border-bottom: 2px dashed var(--pink-main);
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        .face-back p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            white-space: pre-line;
+        }
+
+        /* Button */
         .btn-open {
-            background-color: var(--dark-pink);
+            margin-top: 25px;
+            background: var(--pink-dark);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1rem;
+            padding: 12px 30px;
             border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.3s;
-            box-shadow: 0 5px 15px rgba(242, 92, 126, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            transition: 0.3s;
+            z-index: 30;
         }
 
-        .btn-open:hover { transform: scale(1.1); }
-
-        /* Modal / Overlay Surat */
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .letter-box {
-            background: #fff;
-            width: 85%;
-            max-width: 400px;
-            padding: 40px 30px;
-            border-radius: 15px;
-            position: relative;
-            transform: translateY(50px);
-            transition: 0.5s;
-            border: 2px solid var(--soft-pink);
-        }
-
-        .letter-box h2 {
-            font-family: 'Dancing Script', cursive;
-            color: var(--dark-pink);
-        }
-
-        .letter-content {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #555;
-            text-align: left;
-        }
-
-        .close-btn {
-            margin-top: 20px;
-            background: #eee;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        .btn-open:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
-    <canvas id="confetti-canvas"></canvas>
+    <div id="confetti-wrapper"></div>
 
-    <div class="main-container">
-        <h1 class="title-bold">Happy Birthday Love</h1>
-        <div class="date-tag">✨ 17 March ✨</div>
-        
-        <div class="photo-frame">
-            <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
-        </div>
-        <div class="sub-name">Dear Lou my lovely</div>
-
-        <button class="btn-open" onclick="openLetter()">Buka Surat Dari Aku 💌</button>
+    <div class="header">
+        <h1>Happy Birthday Love</h1>
+        <p>✨ 17 March ✨</p>
     </div>
 
-    <div class="overlay" id="overlay">
-        <div class="letter-box" id="letter">
-            <h2>Untuk Sayangku...</h2>
-            <div class="letter-content">
-                Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke-21 ya. Semoga panjang umur, sehat selalu, dan semua impianmu tercapai di tahun ini. Terima kasih sudah menjadi bagian terindah dalam hidupku. I love you so much! 💖
+    <div class="card-wrapper" onclick="flipCard()">
+        <div class="card" id="mainCard">
+            <div class="card-face face-front">
+                <div class="photo-frame">
+                    <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
+                </div>
+                <h2>Dear Lou my lovely</h2>
+                <div class="hint">Tap untuk buka surat 💌</div>
             </div>
-            <button class="close-btn" onclick="closeLetter()">Tutup</button>
+
+            <div class="card-face face-back">
+                <h3>Untuk Sayangku Lou...</h3>
+                <p>
+                    Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya semoga panjang umur, sehat selalu, makin cantik, dan apa yang kamu cita-citakan bisa tercapai di tahun ini. 
+
+                    Semoga di usia baru ini kamu makin bahagia dan selalu dalam lindungan-Nya. Tetap jadi orang yang luar biasa ya! 
+
+                    I love you so much! ❤️
+                </p>
+            </div>
         </div>
     </div>
+
+    <button class="btn-open" onclick="flipCard()">Buka/Tutup Kartu</button>
 
     <script>
-        // Fungsi Buka Tutup Surat
-        function openLetter() {
-            document.getElementById('overlay').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('letter').style.transform = 'translateY(0)';
-            }, 10);
+        // Fungsi Balik Kartu
+        function flipCard() {
+            document.getElementById('mainCard').classList.toggle('is-flipped');
         }
 
-        function closeLetter() {
-            document.getElementById('letter').style.transform = 'translateY(50px)';
-            setTimeout(() => {
-                document.getElementById('overlay').style.display = 'none';
-            }, 300);
+        // Generate Confetti Otomatis (Aman untuk iOS)
+        const wrapper = document.getElementById('confetti-wrapper');
+        const colors = ['#ff8fa3', '#ff4d6d', '#fff', '#ffccd5', '#c9184a'];
+
+        function createConfetti() {
+            for (let i = 0; i < 60; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = -Math.random() * 20 + 'px';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                conf.style.opacity = Math.random();
+                conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                wrapper.appendChild(conf);
+            }
         }
-
-        // Script Konfeti Sederhana
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particles = [];
-        const colors = ['#ff85a1', '#fbb1bd', '#f25c7e', '#fff', '#ffe5ec'];
-
-        function createParticle() {
-            return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                size: Math.random() * 7 + 3,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                weight: Math.random() * 2 + 1,
-                angle: Math.random() * 360
-            };
-        }
-
-        for (let i = 0; i < 100; i++) {
-            particles.push(createParticle());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, i) => {
-                p.y += p.weight;
-                p.angle += 1;
-                ctx.fillStyle = p.color;
-                ctx.fillRect(p.x, p.y, p.size, p.size);
-
-                if (p.y > canvas.height) {
-                    particles[i] = createParticle();
-                    particles[i].y = -10;
-                }
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        
+        // Jalankan confetti saat web dibuka
+        window.onload = createConfetti;
     </script>
 </body>
 </html>
