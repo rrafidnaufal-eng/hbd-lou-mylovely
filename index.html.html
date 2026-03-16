@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD LOU 21</title>
+    <style>
+        /* Font cadangan jika Google Fonts diblokir */
+        body {
+            margin: 0; background-color: #fff0f3;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden; text-align: center;
+        }
+
+        /* Ornamen Bergerak (Confetti CSS - Lebih Aman buat iOS) */
+        .confetti {
+            position: absolute; width: 10px; height: 10px;
+            background-color: #ff85a1;
+            top: -20px; z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+
+        .container { position: relative; z-index: 10; padding: 20px; }
+
+        h1 { color: #f25c7e; font-size: 2.5rem; margin-bottom: 5px; }
+        
+        .date { background: #f25c7e; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; font-weight: bold; }
+
+        .frame {
+            width: 200px; height: 200px; border-radius: 50%;
+            border: 5px solid #ffb1bd; margin: 20px auto;
+            overflow: hidden; box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .name { font-style: italic; color: #d63384; font-size: 1.5rem; margin-bottom: 20px; }
+
+        .btn {
+            background: #f25c7e; color: white; border: none;
+            padding: 12px 25px; border-radius: 25px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(242,92,126,0.3);
+        }
+
+        /* Popup Surat */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.6);
+            z-index: 100; justify-content: center; align-items: center;
+        }
+        .paper {
+            background: white; width: 80%; max-width: 350px;
+            padding: 30px; border-radius: 15px; text-align: left;
+            border-left: 10px solid #f25c7e;
+        }
+    </style>
+</head>
+<body>
+
+<div id="confetti-wrapper"></div>
+
+<div class="container">
+    <h1>Happy Birthday Love</h1>
+    <div class="date">📅 17 March</div>
+    
+    <div class="frame">
+        <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
+    </div>
+    
+    <div class="name">Dear Lou my lovely</div>
+    <button class="btn" onclick="openMsg()">Klik di sini Lou 💌</button>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="paper">
+        <h3 style="color:#f25c7e">Happy 21st Birthday!</h3>
+        <p>Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya semoga panjang umur, sehat selalu, dan makin sayang sama aku. Semoga semua mimpi kamu terkabul! ❤️</p>
+        <button onclick="closeMsg()" style="border:none; background:none; color:grey; cursor:pointer;">[ Tutup ]</button>
+    </div>
+</div>
+
+<script>
+    // Membuat Konfeti Tanpa Canvas (Lebih Support iOS)
+    const wrapper = document.getElementById('confetti-wrapper');
+    const colors = ['#ff85a1', '#fbb1bd', '#f25c7e', '#ffebef'];
+
+    for (let i = 0; i < 40; i++) {
+        const div = document.createElement('div');
+        div.className = 'confetti';
+        div.style.left = Math.random() * 100 + 'vw';
+        div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        div.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        div.style.opacity = Math.random();
+        wrapper.appendChild(div);
+    }
+
+    function openMsg() { document.getElementById('myModal').style.display = 'flex'; }
+    function closeMsg() { document.getElementById('myModal').style.display = 'none'; }
+</script>
+
+</body>
+</html>
