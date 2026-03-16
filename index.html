@@ -3,187 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Lou!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <title>HBD Lou 21! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --pink-main: #ff8fa3;
-            --pink-dark: #ff4d6d;
-            --pink-soft: #fff0f3;
-            --white: #ffffff;
+            --pink-gelap: #f84878;
+            --pink-medium: #ff85a1;
+            --pink-muda: #ffebef;
+            --pink-bg: #fff0f3;
+            --putih: #ffffff;
         }
 
         * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            background-color: var(--pink-soft);
+            padding: 0;
+            background-color: var(--pink-bg);
             font-family: 'Quicksand', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow: hidden; /* Supaya konfeti tidak bikin scroll */
         }
 
-        /* Confetti Container */
-        #confetti-wrapper {
+        /* Container Konfeti */
+        #confetti-box {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 100;
         }
-
         .confetti {
             position: absolute; width: 10px; height: 10px;
+            top: -20px;
             animation: fall linear infinite;
         }
-
         @keyframes fall {
             to { transform: translateY(110vh) rotate(360deg); }
         }
 
-        /* Header Text */
-        .header { text-align: center; margin-bottom: 20px; z-index: 10; }
-        .header h1 { 
-            color: var(--pink-dark); 
-            font-size: 2.2rem; 
-            margin: 0;
-            font-family: 'Dancing Script', cursive;
-        }
-        .header p { color: #888; font-weight: bold; margin-top: 5px; }
-
-        /* Card Container 3D */
-        .card-wrapper {
-            perspective: 1500px;
-            width: 320px;
-            height: 420px;
+        /* Container 3D Utama */
+        .wraper-3d {
+            perspective: 2000px; /* Jarak pandang 3D */
+            width: 330px;
+            height: 450px;
             z-index: 20;
         }
 
-        .card {
+        /* Buku/Kartu */
+        .buku {
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
             cursor: pointer;
+            transform: rotateY(-180deg); /* State awal tertutup */
         }
 
-        .card.is-flipped {
-            transform: rotateY(-180deg);
+        /* Class untuk membuka kartu (Trigger by JS) */
+        .buku.buka {
+            transform: rotateY(-10deg); /* Sedikit miring untuk efek estetik */
         }
 
-        /* Pages */
-        .card-face {
+        /* Base Halaman */
+        .halaman {
             position: absolute;
             width: 100%;
             height: 100%;
-            backface-visibility: hidden;
+            backface-visibility: hidden; /* Sembunyikan sisi belakang */
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 25px;
+            border: 5px solid var(--putih);
+        }
+
+        /* --- HALAMAN DEPAN (COVER) --- */
+        .cover {
+            background-color: var(--putih);
+            box-shadow: -15px 15px 25px rgba(248, 72, 120, 0.1);
             justify-content: center;
-            padding: 30px;
-            border: 4px solid var(--white);
+            z-index: 2; /* Di atas isi saat tertutup */
         }
 
-        /* Front Page */
-        .face-front {
-            background-color: var(--white);
-        }
-
-        .photo-frame {
-            width: 180px;
-            height: 180px;
+        .bingkai-foto {
+            width: 190px;
+            height: 190px;
             border-radius: 50%;
-            border: 6px solid var(--pink-main);
+            border: 8px solid var(--pink-medium);
             overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
+        .bingkai-foto img { width: 100%; height: 100%; object-fit: cover; }
 
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        .face-front h2 {
-            color: var(--pink-dark);
+        .cover h2 {
+            color: var(--pink-gelap);
             font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin: 0;
+            text-align: center;
         }
 
-        .hint { color: #bbb; font-size: 0.8rem; margin-top: 15px; }
-
-        /* Back Page (Surat) */
-        .face-back {
-            background-color: var(--white);
-            transform: rotateY(180deg);
+        /* --- HALAMAN DALAM (SURAT) --- */
+        .isi {
+            background-color: var(--putih);
+            box-shadow: 0 15px 35px rgba(248, 72, 120, 0.1);
+            transform: rotateY(180deg); /* Di balik cover */
             align-items: flex-start;
             justify-content: flex-start;
-            overflow-y: auto;
+            z-index: 1;
+            padding-top: 30px;
         }
 
-        .face-back h3 {
-            color: var(--pink-dark);
+        .isi h3 {
+            color: var(--pink-gelap);
             font-family: 'Dancing Script', cursive;
             font-size: 1.6rem;
-            border-bottom: 2px dashed var(--pink-main);
-            width: 100%;
+            border-bottom: 2px solid var(--pink-medium);
             padding-bottom: 10px;
+            width: 100%;
+            margin-top: 0;
         }
 
-        .face-back p {
-            color: #555;
-            line-height: 1.7;
+        .isi p {
             font-size: 0.95rem;
-            white-space: pre-line;
+            line-height: 1.7;
+            color: #555;
+            white-space: pre-line; /* Menghormati baris baru */
+            text-align: left;
         }
 
-        /* Button */
-        .btn-open {
-            margin-top: 25px;
-            background: var(--pink-dark);
+        /* Tombol 'Buka Surat' di Luar */
+        .btn-misteri {
+            position: fixed;
+            bottom: 40px;
+            background: var(--pink-gelap);
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 15px 30px;
             border-radius: 50px;
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 5px 20px rgba(248, 72, 120, 0.4);
             transition: 0.3s;
-            z-index: 30;
+            z-index: 50;
         }
+        .btn-misteri:active { transform: scale(0.95); }
+        .btn-misteri.sembunyi { display: none; }
 
-        .btn-open:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
-    <div id="confetti-wrapper"></div>
+    <div id="confetti-box"></div>
 
-    <div class="header">
-        <h1>Happy Birthday Love</h1>
-        <p>✨ 17 March ✨</p>
-    </div>
+    <button class="btn-misteri" id="btnSatu" onclick="mulaiCerita()">Buka Surat MISTERI Ini! 💌</button>
 
-    <div class="card-wrapper" onclick="flipCard()">
-        <div class="card" id="mainCard">
-            <div class="card-face face-front">
-                <div class="photo-frame">
+    <div class="wraper-3d" id="cardWraper" style="display: none;">
+        <div class="buku" id="myCard" onclick="tutupKartu()">
+            
+            <div class="halaman cover">
+                <div class="bingkai-foto">
                     <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
                 </div>
                 <h2>Dear Lou my lovely</h2>
-                <div class="hint">Tap untuk buka surat 💌</div>
+                <small style="color: #bbb; margin-top: 10px;">(Tap kartu untuk menutup)</small>
             </div>
 
-            <div class="card-face face-back">
-                <h3>Untuk Sayangku Lou...</h3>
+            <div class="halaman isi">
+                <h3>Untuk Sayangku Lou,</h3>
                 <p>
                     Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya semoga panjang umur, sehat selalu, makin cantik, dan apa yang kamu cita-citakan bisa tercapai di tahun ini. 
 
-                    Semoga di usia baru ini kamu makin bahagia dan selalu dalam lindungan-Nya. Tetap jadi orang yang luar biasa ya! 
+                    Semoga di usia baru ini kamu makin bahagia dan selalu dalam lindungan-Nya. Tetap jadi Lou yang luar biasa ya! 
 
                     I love you so much! ❤️
                 </p>
@@ -191,34 +188,52 @@
         </div>
     </div>
 
-    <button class="btn-open" onclick="flipCard()">Buka/Tutup Kartu</button>
-
     <script>
-        // Fungsi Balik Kartu
-        function flipCard() {
-            document.getElementById('mainCard').classList.toggle('is-flipped');
+        // --- JS UNTUK KARTU ---
+        const btnSatu = document.getElementById('btnSatu');
+        const cardWraper = document.getElementById('cardWraper');
+        const myCard = document.getElementById('myCard');
+
+        function mulaiCerita() {
+            // Sembunyikan tombol
+            btnSatu.classList.add('sembunyi');
+            
+            // Munculkan Wraper Kartu
+            cardWraper.style.display = 'block';
+            
+            // Jalankan Konfeti
+            buatKonfeti();
+
+            // Sedikit delay, lalu buka kartu otomatis (Efek "Surat Terbuka")
+            setTimeout(() => {
+                myCard.classList.add('buka');
+            }, 300);
         }
 
-        // Generate Confetti Otomatis (Aman untuk iOS)
-        const wrapper = document.getElementById('confetti-wrapper');
-        const colors = ['#ff8fa3', '#ff4d6d', '#fff', '#ffccd5', '#c9184a'];
+        function tutupKartu() {
+            myCard.classList.toggle('buka');
+        }
 
-        function createConfetti() {
-            for (let i = 0; i < 60; i++) {
+        // --- JS UNTUK KONFETI (AMAN iOS) ---
+        function buatKonfeti() {
+            const container = document.getElementById('confetti-box');
+            const colors = ['#f84878', '#ff85a1', '#ffffff', '#ffd1dc', '#ce1a4b'];
+
+            // Buat 80 konfeti berjatuhan
+            for (let i = 0; i < 80; i++) {
                 const conf = document.createElement('div');
                 conf.className = 'confetti';
                 conf.style.left = Math.random() * 100 + 'vw';
-                conf.style.top = -Math.random() * 20 + 'px';
-                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                // Variasi waktu jatuhnya (2 - 5 detik)
                 conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                conf.style.opacity = Math.random();
+                // Warna acak dari palet
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                // Bentuk acak (bulat atau kotak kecil)
                 conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-                wrapper.appendChild(conf);
+                
+                container.appendChild(conf);
             }
         }
-        
-        // Jalankan confetti saat web dibuka
-        window.onload = createConfetti;
     </script>
 </body>
 </html>
