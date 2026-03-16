@@ -3,212 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBD Lou My Lovely</title>
+    <title>HBD Lou My Lovely 💖</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka+One&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink-dark: #ff4d6d;
-            --pink-medium: #ff758f;
-            --pink-light: #ffb3c1;
-            --envelope-color: #ff85a1;
-            --paper-color: #ffffff;
+            --pink-tua: #ff4d6d;
+            --pink-soft: #ff85a1;
+            --pink-pastel: #ffccd5;
+            --bg-feminine: #fff0f3;
         }
 
         body {
             margin: 0; padding: 0;
-            background-color: #fff0f3;
-            background-image: radial-gradient(#ffccd5 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-color: var(--bg-feminine);
+            /* Background Pattern Hati Artistik */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%23ffccd5" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-size: 40px 40px;
             font-family: 'Quicksand', sans-serif;
             display: flex; justify-content: center; align-items: center;
             height: 100vh; overflow: hidden;
         }
 
-        .main-container {
+        .main-wrapper {
             display: flex; align-items: center; justify-content: center;
-            gap: 40px; width: 95%; max-width: 1100px; z-index: 10;
+            gap: 30px; width: 95%; max-width: 1000px; z-index: 10;
         }
 
-        /* --- SISI KIRI: FOTO & TOPI --- */
-        .left-side { text-align: center; flex: 1; }
-        .left-side h1 { font-family: 'Fredoka One', cursive; color: var(--pink-dark); font-size: 2.8rem; margin: 0; }
+        /* --- SISI KIRI: PROFIL --- */
+        .profile-section { text-align: center; flex: 1; }
+        .profile-section h1 { 
+            font-family: 'Fredoka One', cursive; color: var(--pink-tua); 
+            font-size: 3rem; margin: 0; text-shadow: 2px 2px white;
+        }
         
-        .date-tag {
-            background: var(--pink-dark); color: white; padding: 5px 18px;
-            border-radius: 20px; display: inline-block; font-weight: bold; margin: 8px 0;
-            position: relative; z-index: 10; /* Biar di atas topi */
+        .date-badge {
+            background: linear-gradient(45deg, var(--pink-tua), var(--pink-soft));
+            color: white; padding: 6px 20px; border-radius: 25px;
+            display: inline-block; font-weight: bold; margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.2);
         }
 
-        .photo-wrapper {
-            position: relative; width: 200px; height: 200px; margin: 30px auto 15px;
+        .photo-frame {
+            position: relative; width: 220px; height: 220px; margin: 25px auto;
         }
 
-        /* Topi Ultah - Diperbaiki posisinya agar tidak nabrak tanggal */
-        .hat {
-            position: absolute; top: -35px; left: 60%;
+        .birthday-hat {
+            position: absolute; top: -38px; left: 65%;
             transform: translateX(-50%) rotate(15deg);
-            width: 70px; z-index: 5; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.2));
+            width: 75px; z-index: 15; drop-shadow: 2px 4px 5px rgba(0,0,0,0.1);
         }
 
-        .photo-circle {
+        .circle-img {
             width: 100%; height: 100%; border-radius: 50%;
-            border: 6px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            overflow: hidden; position: relative; z-index: 6;
+            border: 8px solid white; box-shadow: 0 15px 35px rgba(255, 133, 161, 0.3);
+            overflow: hidden; position: relative; z-index: 10;
         }
-        .photo-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .circle-img img { width: 100%; height: 100%; object-fit: cover; }
 
-        .btn-open {
-            background: var(--pink-dark); color: white; border: none;
-            padding: 12px 25px; border-radius: 25px; cursor: pointer;
-            font-weight: bold; margin-top: 15px; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(248,77,109,0.3);
+        .btn-magic {
+            background: var(--pink-tua); color: white; border: none;
+            padding: 12px 30px; border-radius: 50px; cursor: pointer;
+            font-weight: 700; font-size: 1rem; transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(248,77,109,0.4);
         }
+        .btn-magic:hover { transform: scale(1.05); background: #e63958; }
 
-        /* --- SISI KANAN: AMPLOP & KERTAS --- */
-        .right-side { flex: 1; display: flex; justify-content: center; align-items: flex-end; height: 450px; }
+        /* --- SISI KANAN: AMPLOP & SURAT --- */
+        .envelope-section { flex: 1; display: flex; justify-content: center; align-items: flex-end; height: 480px; }
+        .env-box { position: relative; width: 320px; height: 210px; }
 
-        .envelope-container { position: relative; width: 300px; height: 200px; }
-
-        .envelope {
-            position: absolute; bottom: 0; width: 300px; height: 200px;
-            background-color: var(--envelope-color); z-index: 3;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .env-base {
+            position: absolute; bottom: 0; width: 100%; height: 100%;
+            background-color: var(--pink-soft); z-index: 5;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
 
         /* Badan Depan Amplop */
-        .envelope::after {
+        .env-base::after {
             content: ""; position: absolute; z-index: 10;
-            border-top: 100px solid transparent;
-            border-left: 150px solid #ffb1bd;
-            border-right: 150px solid #ffb1bd;
-            border-bottom: 100px solid #ffb1bd;
-            bottom: 0; left: 0;
+            border-top: 105px solid transparent;
+            border-left: 160px solid #ffb1bd;
+            border-right: 160px solid #ffb1bd;
+            border-bottom: 105px solid #ffb1bd;
+            bottom: 0;
         }
 
-        .flap {
+        .env-flap {
             position: absolute; top: 0; width: 0; height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 100px solid var(--pink-dark);
-            transform-origin: top; transition: transform 0.4s 0.3s; z-index: 11;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid var(--pink-tua);
+            transform-origin: top; transition: transform 0.6s 0.2s; z-index: 11;
         }
 
-        /* Kertas Surat - Visual Kertas Asli */
-        .paper {
+        /* Visual Surat Estetik */
+        .paper-letter {
             position: absolute; bottom: 10px; left: 10px;
-            width: 280px; height: 170px;
-            background: var(--paper-color);
-            background-image: linear-gradient(#f1f1f1 1px, transparent 1px);
-            background-size: 100% 25px; /* Efek garis buku */
-            padding: 25px 20px; box-sizing: border-box;
+            width: 300px; height: 190px;
+            background: white; border-radius: 5px;
+            padding: 35px 25px 25px; box-sizing: border-box;
             transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2; border-radius: 5px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            z-index: 4; box-shadow: 0 0 20px rgba(0,0,0,0.05);
             overflow-y: auto;
         }
 
-        .paper h2 { font-family: 'Dancing Script', cursive; color: var(--pink-dark); margin: 0 0 15px 0; font-size: 1.4rem; }
-        .paper p { font-size: 0.9rem; line-height: 25px; color: #444; margin: 0; }
-
-        /* Status Terbuka */
-        .envelope-container.is-open .flap { transform: rotateX(180deg); z-index: 1; }
-        .envelope-container.is-open .paper { 
-            transform: translateY(-180px); /* Keluar dengan jarak yang pas */
-            height: 320px; z-index: 12; /* Di depan amplop saat keluar */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        /* Efek Selotip Hias (Washi Tape) */
+        .paper-letter::before {
+            content: ""; position: absolute; top: 5px; left: 50%;
+            transform: translateX(-50%); width: 80px; height: 25px;
+            background: rgba(255, 204, 213, 0.6);
+            border: 1px dashed var(--pink-soft);
         }
 
-        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+        .paper-letter h2 { font-family: 'Dancing Script', cursive; color: var(--pink-tua); margin-bottom: 15px; }
+        .paper-letter p { font-size: 0.95rem; line-height: 1.7; color: #444; border-left: 2px solid var(--pink-pastel); padding-left: 10px; }
+
+        /* Logic Buka */
+        .env-box.open .env-flap { transform: rotateX(180deg); z-index: 1; }
+        .env-box.open .paper-letter { 
+            transform: translateY(-200px); height: 380px; z-index: 12; 
+        }
+
+        #confetti-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; gap: 20px; height: 90vh; padding-top: 30px; }
+            .envelope-section { height: 400px; }
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="confetti-canvas"></canvas>
+    <canvas id="confetti-layer"></canvas>
 
-    <div class="main-container">
-        <div class="left-side">
+    <div class="main-wrapper">
+        <div class="profile-section">
             <h1>Happy Birthday</h1>
-            <div class="date-tag">✨ 17 March ✨</div>
+            <div class="date-badge">🎂 17 March 🎂</div>
             
-            <div class="photo-wrapper">
-                <svg class="hat" viewBox="0 0 100 100">
-                    <path d="M50 15 L15 85 L85 85 Z" fill="#ff4d6d" stroke="white" stroke-width="2"/>
-                    <circle cx="50" cy="15" r="6" fill="#fff" />
-                    <circle cx="35" cy="50" r="3" fill="#ffccd5" opacity="0.6"/>
-                    <circle cx="65" cy="70" r="4" fill="#ffccd5" opacity="0.6"/>
+            <div class="photo-frame">
+                <svg class="birthday-hat" viewBox="0 0 100 100">
+                    <path d="M50 15 L20 85 L80 85 Z" fill="#ff4d6d" stroke="white" stroke-width="2"/>
+                    <circle cx="50" cy="15" r="7" fill="#fff" />
+                    <path d="M30 60 Q50 70 70 60" fill="none" stroke="white" stroke-opacity="0.5" />
                 </svg>
-                <div class="photo-circle">
+                <div class="circle-img">
                     <img src="https://lh3.googleusercontent.com/d/1WJoaXRibisIAo7aHjD-B2Z6D_Z-x5TcB" alt="Lou">
                 </div>
             </div>
             
-            <p style="color:var(--pink-dark); font-weight:bold; margin:0;">Dear Lou my lovely</p>
-            <button class="btn-open" onclick="toggleSurat()">Klik Buka Surat 💌</button>
+            <p style="color:var(--pink-tua); font-weight:bold; letter-spacing: 1px;">Dear Lou my lovely 💖</p>
+            <button class="btn-magic" onclick="openMagic()">Buka Kejutan 💌</button>
         </div>
 
-        <div class="right-side">
-            <div class="envelope-container" id="containerSurat">
-                <div class="flap"></div>
-                <div class="paper">
+        <div class="envelope-section">
+            <div class="env-box" id="envBox">
+                <div class="env-flap"></div>
+                <div class="paper-letter">
                     <h2>Dear Lou Sayang...</h2>
                     <p>
                         Happy birthday sayangku cintaku Lou, selamat ulang tahun yang ke 21 ya. 
                         Semoga panjang umur, sehat selalu, makin cantik, dan apa yang kamu cita-citakan bisa tercapai di tahun ini. 
                         <br><br>
-                        Tetap jadi Lou yang luar biasa ya! I love you so much! ❤️
-                        <br><br>
-                        <i>With Love, [Nama Kamu]</i>
+                        Tetap jadi Lou yang luar biasa ya! I love you so much! 🌸✨
                     </p>
                 </div>
-                <div class="envelope"></div>
+                <div class="env-base"></div>
             </div>
         </div>
     </div>
 
     <script>
-        function toggleSurat() {
-            const container = document.getElementById('containerSurat');
-            container.classList.toggle('is-open');
-            if(container.classList.contains('is-open')) {
-                mencuarkanConfetti();
+        let isConfettiActive = false;
+        const canvas = document.getElementById('confetti-layer');
+        const ctx = canvas.getContext('2d');
+        let pieces = [];
+
+        function openMagic() {
+            document.getElementById('envBox').classList.add('open');
+            if(!isConfettiActive) {
+                isConfettiActive = true;
+                initConfetti();
+                animateConfetti();
             }
         }
 
-        // Script Confetti Meriah
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        let partikel = [];
-
-        function mencuarkanConfetti() {
+        function initConfetti() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            for (let i = 0; i < 150; i++) {
-                partikel.push({
+            for (let i = 0; i < 100; i++) {
+                pieces.push({
                     x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    r: Math.random() * 6 + 4,
-                    d: Math.random() * 150,
-                    color: `hsl(${Math.random() * 360}, 70%, 70%)`,
-                    tilt: Math.random() * 10 - 10
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: ['#ff4d6d', '#ff758f', '#ffccd5', '#ffffff', '#ffd1dc'][Math.floor(Math.random() * 5)],
+                    speed: Math.random() * 2 + 1,
+                    angle: Math.random() * 6.28
                 });
             }
-            animasi();
         }
 
-        function animasi() {
+        function animateConfetti() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            partikel.forEach((p, i) => {
-                p.y += Math.cos(p.d) + 3;
-                p.x += Math.sin(p.d);
+            pieces.forEach(p => {
+                p.y += p.speed;
+                p.angle += 0.05;
+                if (p.y > canvas.height) p.y = -10; // Reset ke atas agar tidak berhenti
+                
+                ctx.fillStyle = p.color;
                 ctx.beginPath();
-                ctx.lineWidth = p.r;
-                ctx.strokeStyle = p.color;
-                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
-                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
-                ctx.stroke();
+                ctx.arc(p.x + Math.sin(p.angle) * 5, p.y, p.size / 2, 0, Math.PI * 2);
+                ctx.fill();
             });
-            requestAnimationFrame(animasi);
+            requestAnimationFrame(animateConfetti);
         }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
